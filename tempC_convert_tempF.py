@@ -1,3 +1,8 @@
+from flask import Flask
+
+app= Flask(__name__)
+
+@app.route('/cToFConvertter')
 def cToFConvertter():
     while True:
         
@@ -10,6 +15,7 @@ def cToFConvertter():
         else:
             print('cTemp is empty')
             continue
+        
 
 
 
@@ -20,3 +26,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    app.run() 
