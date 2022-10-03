@@ -1,32 +1,32 @@
-from flask import Flask
-from flask import  render_template, request
+from flask import Flask, render_template, request
 from flask_mysqldb import MySQL
-import yaml
+import mysql.connector
 
 app=Flask(__name__,template_folder='templates')
 
+db= mysql.connector.connect(
+    host= 'localhost',
+    user= 'root',
+    passwd= 'Cuong-1705',
+    database= 'database')
 
-db = yaml.load(open('db'))
-app.config['MYSQL_HOST']= db['mysql_host']
-app.config['MYSQL_USER']= db['mysql_user']
-app.config['MYSQL_PASSWORD']= db['mysql_password']
-app.config['MYSQL_DB']= db['mysql_db']
-
+app.config['MYSQL_HOST']= db
+app.config['MYSQL_USER']= db
+app.config['MYSQL_PASSWORD']= db
+app.config['MYSQL_DB']= db
 mysql= MySQL(app)
 
 @app.route('/signup', methods=['GET','POST'])
 def register():
     if request.method == 'POST':
-        userDetails = request.form
-        name = userDetails['name']
-        email= userDetails['email']
-        password= userDetails['password']
+        name = request.form['name']
+        email= request.form['email']
+        password= request.form['password']
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO new_table(name, email, password) VALUES(%s, %s)", (name, email, password))
+        cur.execute("INSERT INTO new_table(name, email, password) VALUES(%s, %s, %s)", (name, email, password))
         mysql.connection.commit()
         cur.close()
         return'success'
-    
     return render_template ('register.html')
 
 if __name__ == '__main__':

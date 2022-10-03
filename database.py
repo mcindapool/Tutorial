@@ -11,8 +11,8 @@ db = mysql.connector.connect(
 
 mycursor= db.cursor()
 #mycursor.execute('CREATE TABLE Person (name VARCHAR(50), age smallint UNSIGNED, personID int PRIMARY KEY AUTO_INCREMENT)')
-mycursor.execute("INSERT INTO Person(name, age) VALUES(%s,%s)",("Hung", 26))
-db.commit()
+#mycursor.execute("INSERT INTO Person(name, age) VALUES(%s,%s)",("Hung", 26))
+#db.commit()
 mycursor.execute("SELECT * FROM Person")
 
 for x in mycursor:
